@@ -60,11 +60,9 @@ jobs:
           git checkout gh-pages || git checkout --orphan gh-pages
           if [ ! -f index.yaml ]; then
             echo "Creating initial index.yaml"
-            cat > index.yaml << 'YAML'
-apiVersion: v1
-entries: {}
-generated: "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-YAML
+            echo "apiVersion: v1" > index.yaml
+            echo "entries: {}" >> index.yaml
+            echo "generated: \"$(date -u +%Y-%m-%dT%H:%M:%SZ)\"" >> index.yaml
             git add index.yaml
             git commit -m "Initialize index.yaml" || true
             git push origin gh-pages
