@@ -1,0 +1,10 @@
+chart-dirs:
+  - charts
+
+excluded-charts: []
+
+validate-maintainers: false
+
+check-version-increment: true
+
+helm-extra-args: --timeout 600s

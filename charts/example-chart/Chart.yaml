@@ -1,0 +1,15 @@
+apiVersion: v2
+name: example-chart
+description: A Helm chart for Kubernetes
+type: application
+version: 0.1.0
+appVersion: "1.0"
+keywords:
+  - kubernetes
+  - example
+home: https://github.com/OctoKode/helm-charts
+sources:
+  - https://github.com/OctoKode/helm-charts
+maintainers:
+  - name: Marcus Young
+kubeVersion: ">=1.25.0-0"
