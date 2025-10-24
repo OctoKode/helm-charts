@@ -83,4 +83,5 @@ jobs:
           git checkout "${GITHUB_REF#refs/tags/}"
           
           # Update index and push to gh-pages
-          cr index -o "${{ github.repository_owner }}" -r "${{ github.event.repository.name }}" -c "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" --push
+          mkdir -p .cr-index
+          cr index -o "${{ github.repository_owner }}" -r "${{ github.event.repository.name }}" -c "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" -i .cr-index/index.yaml --push
