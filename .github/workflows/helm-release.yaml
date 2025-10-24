@@ -57,7 +57,14 @@ jobs:
           
           # Ensure gh-pages branch has an index.yaml
           git fetch origin gh-pages || true
-          git checkout gh-pages || git checkout --orphan gh-pages
+          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
+            git checkout gh-pages
+            git pull origin gh-pages
+          else
+            git checkout --orphan gh-pages
+            git rm -rf . || true
+          fi
+          
           if [ ! -f index.yaml ]; then
             echo "Creating initial index.yaml"
             echo "apiVersion: v1" > index.yaml
