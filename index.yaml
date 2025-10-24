@@ -1,3 +1,23 @@
 apiVersion: v1
-entries: {}
-generated: "2025-10-24T20:41:49Z"
+entries:
+  example-chart:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-10-24T20:47:23.606049868Z"
+    description: A Helm chart for Kubernetes
+    digest: 7303f41e48c51be9e3c8a37e359c1521386092becdc28b37921f14eb97f50703
+    home: https://github.com/OctoKode/helm-charts
+    keywords:
+    - kubernetes
+    - example
+    kubeVersion: '>=1.25.0-0'
+    maintainers:
+    - name: Marcus Young
+    name: example-chart
+    sources:
+    - https://github.com/OctoKode/helm-charts
+    type: application
+    urls:
+    - https://github.com/OctoKode/helm-charts/releases/download/example-chart-0.1.0/example-chart-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-10-24T20:47:23.606060859Z"
