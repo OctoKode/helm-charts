@@ -1,23 +1,27 @@
 apiVersion: v1
 entries:
-  example-chart:
+  kyverno-artifact-operator:
   - apiVersion: v2
-    appVersion: "1.0"
-    created: "2025-10-24T20:47:23.606049868Z"
-    description: A Helm chart for Kubernetes
-    digest: 7303f41e48c51be9e3c8a37e359c1521386092becdc28b37921f14eb97f50703
-    home: https://github.com/OctoKode/helm-charts
+    appVersion: latest
+    created: "2025-11-05T21:44:29.899669765Z"
+    description: A Kubernetes operator that automatically syncs Kyverno policies from
+      OCI artifacts
+    digest: cd6c343cd81a5f1781a4e9f31258b7d62a62ee20bfbc697cfdcc81859012f308
+    home: https://github.com/OctoKode/kyverno-artifact-operator
     keywords:
-    - kubernetes
-    - example
+    - kyverno
+    - policies
+    - operator
+    - oci
+    - artifacts
     kubeVersion: '>=1.25.0-0'
     maintainers:
     - name: Marcus Young
-    name: example-chart
+    name: kyverno-artifact-operator
     sources:
-    - https://github.com/OctoKode/helm-charts
+    - https://github.com/OctoKode/kyverno-artifact-operator
     type: application
     urls:
-    - https://github.com/OctoKode/helm-charts/releases/download/example-chart-0.1.0/example-chart-0.1.0.tgz
+    - https://github.com/OctoKode/helm-charts/releases/download/kyverno-artifact-operator-0.1.0/kyverno-artifact-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-24T20:47:23.606060859Z"
+generated: "2025-11-05T21:44:29.89968305Z"
