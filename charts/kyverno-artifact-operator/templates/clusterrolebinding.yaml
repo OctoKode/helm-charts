@@ -1,0 +1,29 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "kyverno-artifact-operator.fullname" . }}-manager-rolebinding
+  labels:
+    {{- include "kyverno-artifact-operator.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "kyverno-artifact-operator.fullname" . }}-manager-role
+subjects:
+- kind: ServiceAccount
+  name: {{ include "kyverno-artifact-operator.serviceAccountName" . }}
+  namespace: {{ include "kyverno-artifact-operator.namespace" . }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "kyverno-artifact-operator.fullname" . }}-watcher-rolebinding
+  labels:
+    {{- include "kyverno-artifact-operator.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "kyverno-artifact-operator.fullname" . }}-watcher-role
+subjects:
+- kind: ServiceAccount
+  name: {{ include "kyverno-artifact-operator.watcherServiceAccountName" . }}
+  namespace: {{ include "kyverno-artifact-operator.namespace" . }}

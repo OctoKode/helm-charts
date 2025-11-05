@@ -1,0 +1,18 @@
+apiVersion: v2
+name: kyverno-artifact-operator
+description: A Kubernetes operator that automatically syncs Kyverno policies from OCI artifacts
+type: application
+version: 0.1.0
+appVersion: "latest"
+keywords:
+  - kyverno
+  - policies
+  - operator
+  - oci
+  - artifacts
+home: https://github.com/OctoKode/kyverno-artifact-operator
+sources:
+  - https://github.com/OctoKode/kyverno-artifact-operator
+maintainers:
+  - name: Marcus Young
+kubeVersion: ">=1.25.0-0"

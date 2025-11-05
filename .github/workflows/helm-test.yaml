@@ -5,6 +5,12 @@ name: helm-test
 permissions: {}
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - charts/**
+      - .github/workflows/helm-test.yaml
   pull_request:
     branches:
       - main

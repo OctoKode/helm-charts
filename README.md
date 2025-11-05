@@ -10,28 +10,28 @@ Helm's [documentation](https://helm.sh/docs) to get started.
 Once Helm has been set up correctly, add the repo as follows:
 
 ```bash
-helm repo add my-charts https://OctoKode.github.io/helm-charts
+helm repo add octokode https://OctoKode.github.io/helm-charts
 ```
 
 If you had already added this repo earlier, run `helm repo update` to retrieve
 the latest versions of the packages. You can then run `helm search repo
-my-charts` to see the charts.
+octokode` to see the charts.
 
-To install the example-chart chart:
+To install a chart:
 
 ```bash
-helm install my-example-chart my-charts/example-chart
+helm install my-release octokode/<chart-name>
 ```
 
-To uninstall the chart:
+To uninstall a chart:
 
 ```bash
-helm delete my-example-chart
+helm delete my-release
 ```
 
 ## Charts
 
-- [example-chart](charts/example-chart) - Example Helm chart for Kubernetes
+- [kyverno-artifact-operator](charts/kyverno-artifact-operator) - Kubernetes operator that automatically syncs Kyverno policies from OCI artifacts
 
 ## Development
 
@@ -72,10 +72,12 @@ The GitHub Actions workflow will automatically create and update the `gh-pages` 
 1. Update your chart version in `Chart.yaml`
 2. Commit your changes
 3. Create and push a version tag:
+
    ```bash
    git tag -a v1.0.0 -m "Release version 1.0.0"
    git push origin v1.0.0
    ```
+
 4. GitHub Actions will automatically package and publish the chart
 
 ## Contributing

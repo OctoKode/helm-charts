@@ -1,0 +1,8 @@
+{{- if .Values.namespace.create }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ include "kyverno-artifact-operator.namespace" . }}
+  labels:
+    {{- include "kyverno-artifact-operator.labels" . | nindent 4 }}
+{{- end }}

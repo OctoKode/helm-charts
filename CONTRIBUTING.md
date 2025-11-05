@@ -24,7 +24,7 @@ If you find a bug or have a suggestion for improvement:
 
 Each chart should follow the standard Helm chart structure:
 
-```
+```text
 charts/
 └── my-chart/
     ├── Chart.yaml          # Chart metadata
@@ -51,6 +51,7 @@ charts/
    - PATCH version for backwards-compatible bug fixes
 
 3. **Testing**: Charts should be tested locally before submitting:
+
    ```bash
    helm lint charts/my-chart
    helm template charts/my-chart
@@ -93,7 +94,8 @@ ct install --all
 - Reference issues when applicable: `Fix #123: Description`
 
 Example:
-```
+
+```text
 Add nginx-ingress chart
 
 - Include basic ingress controller setup
