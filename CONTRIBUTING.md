@@ -63,6 +63,32 @@ charts/
    - Use nested structures for organization
    - Follow Kubernetes naming conventions
 
+### Development Setup
+
+This repository uses [pre-commit](https://pre-commit.com/) to ensure code quality:
+
+```bash
+# Install pre-commit
+pip install pre-commit
+# or
+brew install pre-commit
+
+# Install the git hooks
+pre-commit install
+
+# (Optional) Run hooks against all files
+pre-commit run --all-files
+```
+
+Pre-commit will automatically run the following checks:
+
+- YAML linting (yamllint)
+- Markdown linting (markdownlint)
+- Helm chart linting (helm lint)
+- Helm docs generation
+- Secret detection (gitleaks)
+- General file checks (trailing whitespace, etc.)
+
 ### Chart Testing
 
 This repository uses [chart-testing](https://github.com/helm/chart-testing) to validate charts:

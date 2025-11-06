@@ -4,7 +4,7 @@ name: lint
 
 permissions: {}
 
-on:
+"on":
   push:
     branches:
       - main

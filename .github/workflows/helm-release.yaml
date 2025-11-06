@@ -4,7 +4,7 @@ name: helm-release
 
 permissions: {}
 
-on:
+"on":
   push:
     tags:
       - 'v*.*.*'
@@ -34,7 +34,9 @@ jobs:
 
       - name: Install chart-releaser
         run: |
-          curl -sSL https://github.com/helm/chart-releaser/releases/download/v1.6.1/chart-releaser_1.6.1_linux_amd64.tar.gz | tar xz
+          curl -sSL \
+            https://github.com/helm/chart-releaser/releases/download/v1.6.1/chart-releaser_1.6.1_linux_amd64.tar.gz \
+            | tar xz
           sudo mv cr /usr/local/bin/cr
 
       - name: Package and release charts
@@ -53,7 +55,9 @@ jobs:
           done
 
           # Upload chart packages to GitHub releases
-          cr upload -o "${{ github.repository_owner }}" -r "${{ github.event.repository.name }}" -c "$(git rev-parse HEAD)" --skip-existing
+          cr upload -o "${{ github.repository_owner }}" \
+            -r "${{ github.event.repository.name }}" \
+            -c "$(git rev-parse HEAD)" --skip-existing
 
           # Ensure gh-pages branch has an index.yaml
           git fetch origin gh-pages || true
@@ -90,7 +94,14 @@ jobs:
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
               <title>OctoKode Helm Charts</title>
               <style>
-                  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; color: #333; }
+                  body {
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                    line-height: 1.6;
+                    max-width: 900px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    color: #333;
+                  }
                   h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
                   h2 { color: #34495e; margin-top: 30px; }
                   code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
@@ -126,4 +137,7 @@ jobs:
 
           # Update index and push to gh-pages
           mkdir -p .cr-index
-          cr index -o "${{ github.repository_owner }}" -r "${{ github.event.repository.name }}" -c "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" -i .cr-index/index.yaml --push
+          cr index -o "${{ github.repository_owner }}" \
+            -r "${{ github.event.repository.name }}" \
+            -c "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" \
+            -i .cr-index/index.yaml --push

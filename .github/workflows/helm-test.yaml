@@ -4,7 +4,7 @@ name: helm-test
 
 permissions: {}
 
-on:
+"on":
   push:
     branches:
       - main
