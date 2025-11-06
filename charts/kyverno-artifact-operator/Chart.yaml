@@ -2,7 +2,7 @@ apiVersion: v2
 name: kyverno-artifact-operator
 description: A Kubernetes operator that automatically syncs Kyverno policies from OCI artifacts
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: "latest"
 keywords:
   - kyverno
