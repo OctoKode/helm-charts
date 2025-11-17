@@ -13,10 +13,18 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# Kyverno dependency configuration
+# The operator requires Kyverno to be installed in the cluster
+kyverno:
+  enabled: true
+  # Additional kyverno configuration can be added here
+  # See https://github.com/kyverno/kyverno/tree/main/charts/kyverno for all options
+
 # Watcher configuration for the pods that sync policies
+# Note: As of v0.0.3+, the watcher uses the same image as the operator
 watcher:
   image:
-    repository: ghcr.io/octokode/kyverno-artifact-watcher
+    repository: ghcr.io/octokode/kyverno-artifact-operator
     tag: "latest"
   serviceAccount:
     create: true

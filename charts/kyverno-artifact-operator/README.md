@@ -6,26 +6,61 @@ A Kubernetes operator that automatically syncs Kyverno policies from OCI artifac
 
 The Kyverno Artifact Operator watches OCI artifacts for changes and automatically applies Kyverno policies to your Kubernetes cluster. When you push a new version of your policy artifact, the operator detects the change, pulls the new policies, and applies them to your cluster.
 
+**Architecture:** The operator uses a unified binary that can run in two modes:
+
+- **Operator mode** (default): Manages KyvernoArtifact custom resources
+- **Watcher mode**: Monitors OCI registries for policy updates
+
+The operator automatically deploys watcher pods using the same container image with the `-watcher` flag.
+
 ## Features
 
-- 🔄 Automatic policy synchronization from OCI registries
-- 📦 Support for GitHub Container Registry (GHCR) and Artifactory
-- ⏱️ Configurable polling intervals
-- 🔒 Secure token management via Kubernetes secrets
-- 📊 Prometheus metrics for monitoring
+- Automatic policy synchronization from OCI registries
+- Support for GitHub Container Registry (GHCR) and Artifactory
+- Configurable polling intervals
+- Secure token management via Kubernetes secrets
+- Prometheus metrics for monitoring
 
 ## Prerequisites
 
 - Kubernetes 1.25+
 - Helm 3.0+
-- Kyverno installed in the cluster
+
+## Dependencies
+
+This chart has a dependency on [Kyverno](https://kyverno.io/) v3.5.2, which will be automatically installed by default.
+
+If you already have Kyverno installed, you can disable the dependency installation:
+
+```bash
+helm install kyverno-artifact-operator octokode/kyverno-artifact-operator \
+  -n kyverno-artifact-operator-system \
+  --create-namespace \
+  --set kyverno.enabled=false
+```
 
 ## Installing the Chart
+
+### With Kyverno (Default)
+
+This will install both Kyverno and the operator:
+
+```bash
+helm repo add octokode https://octokode.github.io/helm-charts
+helm repo add kyverno https://kyverno.github.io/kyverno/
+helm repo update
+helm install kyverno-artifact-operator octokode/kyverno-artifact-operator -n kyverno-artifact-operator-system --create-namespace
+```
+
+### Without Kyverno (if already installed)
 
 ```bash
 helm repo add octokode https://octokode.github.io/helm-charts
 helm repo update
-helm install kyverno-artifact-operator octokode/kyverno-artifact-operator -n kyverno-artifact-operator-system --create-namespace
+helm install kyverno-artifact-operator octokode/kyverno-artifact-operator \
+  -n kyverno-artifact-operator-system \
+  --create-namespace \
+  --set kyverno.enabled=false
 ```
 
 ## Configuration
@@ -93,8 +128,9 @@ spec:
 | `image.repository` | Controller image repository | `ghcr.io/octokode/kyverno-artifact-operator` |
 | `image.pullPolicy` | Image pull policy | `IfNotPresent` |
 | `image.tag` | Image tag | `latest` |
-| `watcher.image.repository` | Watcher image repository | `ghcr.io/octokode/kyverno-artifact-watcher` |
-| `watcher.image.tag` | Watcher image tag | `latest` |
+| `kyverno.enabled` | Install Kyverno as a dependency | `true` |
+| `watcher.image.repository` | Watcher image repository (same as operator) | `ghcr.io/octokode/kyverno-artifact-operator` |
+| `watcher.image.tag` | Watcher image tag (same as operator) | `latest` |
 | `watcher.secret.name` | Name of secret containing registry credentials | `kyverno-watcher-secret` |
 | `watcher.secret.githubTokenKey` | Key for GitHub token in secret | `github-token` |
 | `watcher.secret.artifactoryUsernameKey` | Key for Artifactory username in secret | `artifactory-username` |
@@ -113,8 +149,11 @@ spec:
 image:
   tag: "v0.1.0"
 
+# Note: watcher.image should match the operator image
+# since they use the same unified binary
 watcher:
   image:
+    repository: ghcr.io/octokode/kyverno-artifact-operator
     tag: "v0.1.0"
   secret:
     name: "my-registry-credentials"
@@ -138,6 +177,26 @@ helm install kyverno-artifact-operator octokode/kyverno-artifact-operator \
   --create-namespace \
   -f custom-values.yaml
 ```
+
+### Upgrading from Separate Watcher Image
+
+If you're upgrading from a version that used a separate watcher image (`ghcr.io/octokode/kyverno-artifact-watcher`), the chart will automatically use the new unified image. You can:
+
+1. **Let the chart use defaults** (recommended):
+
+   ```bash
+   helm upgrade kyverno-artifact-operator octokode/kyverno-artifact-operator \
+     -n kyverno-artifact-operator-system
+   ```
+
+2. **Or explicitly set the watcher image** (if using custom registry):
+
+   ```yaml
+   watcher:
+     image:
+       repository: my-registry/kyverno-artifact-operator
+       tag: "v0.2.0"
+   ```
 
 ## Uninstalling the Chart
 
