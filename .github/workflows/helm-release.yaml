@@ -32,6 +32,11 @@ jobs:
         with:
           version: v3.13.0
 
+      - name: Add Helm repositories
+        run: |
+          helm repo add kyverno https://kyverno.github.io/kyverno/
+          helm repo update
+
       - name: Install chart-releaser
         run: |
           curl -sSL \
@@ -50,6 +55,10 @@ jobs:
           for chart in charts/*; do
             if [ -d "$chart" ]; then
               echo "Packaging $chart..."
+              # Build dependencies before packaging
+              if [ -f "$chart/Chart.yaml" ]; then
+                helm dependency build "$chart" || echo "No dependencies to build for $chart"
+              fi
               helm package "$chart" --destination .cr-release-packages
             fi
           done
