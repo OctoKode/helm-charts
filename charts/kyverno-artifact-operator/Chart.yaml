@@ -4,7 +4,7 @@ description: >-
   A Kubernetes operator that automatically syncs Kyverno policies from OCI artifacts.
   Uses a unified binary for both operator and watcher modes.
 type: application
-version: 0.2.0
+version: 0.2.1
 appVersion: "latest"
 keywords:
   - kyverno
