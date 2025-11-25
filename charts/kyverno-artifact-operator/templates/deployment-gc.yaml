@@ -1,0 +1,74 @@
+{{- if .Values.gc.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "kyverno-artifact-operator.fullname" . }}-gc
+  namespace: {{ include "kyverno-artifact-operator.namespace" . }}
+  labels:
+    {{- include "kyverno-artifact-operator.labels" . | nindent 4 }}
+    app.kubernetes.io/component: gc
+spec:
+  replicas: {{ .Values.gc.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "kyverno-artifact-operator.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: gc
+  template:
+    metadata:
+      {{- with .Values.gc.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "kyverno-artifact-operator.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: gc
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "kyverno-artifact-operator.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.gc.podSecurityContext | nindent 8 }}
+      containers:
+      - name: gc
+        securityContext:
+          {{- toYaml .Values.gc.securityContext | nindent 10 }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command:
+        - /manager
+        args:
+        - gc
+        {{- with .Values.gc.extraArgs }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.gc.env }}
+        env:
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        ports: []
+        {{- with .Values.gc.livenessProbe }}
+        livenessProbe:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.gc.readinessProbe }}
+        readinessProbe:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        resources:
+          {{- toYaml .Values.gc.resources | nindent 10 }}
+      {{- with .Values.gc.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.gc.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.gc.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      terminationGracePeriodSeconds: 10
+{{- end }}

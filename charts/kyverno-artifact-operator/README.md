@@ -6,10 +6,11 @@ A Kubernetes operator that automatically syncs Kyverno policies from OCI artifac
 
 The Kyverno Artifact Operator watches OCI artifacts for changes and automatically applies Kyverno policies to your Kubernetes cluster. When you push a new version of your policy artifact, the operator detects the change, pulls the new policies, and applies them to your cluster.
 
-**Architecture:** The operator uses a unified binary that can run in two modes:
+**Architecture:** The operator uses a unified binary that can run in three modes:
 
 - **Operator mode** (default): Manages KyvernoArtifact custom resources
 - **Watcher mode**: Monitors OCI registries for policy updates
+- **GC mode** (optional): Performs garbage collection of orphaned resources
 
 The operator automatically deploys watcher pods using the same container image with the `-watcher` flag.
 
@@ -64,6 +65,29 @@ helm install kyverno-artifact-operator octokode/kyverno-artifact-operator \
 ```
 
 ## Configuration
+
+### Garbage Collection Deployment
+
+The chart includes an optional garbage collection (GC) deployment that can clean up orphaned or stale resources. This deployment is disabled by default.
+
+To enable the GC deployment:
+
+```bash
+helm install kyverno-artifact-operator octokode/kyverno-artifact-operator \
+  -n kyverno-artifact-operator-system \
+  --create-namespace \
+  --set gc.enabled=true
+```
+
+The GC deployment runs the same operator image with the `gc` command, which performs periodic cleanup tasks. You can customize its polling interval using the `POLL_INTERVAL` environment variable (defaults to 60s):
+
+```yaml
+gc:
+  enabled: true
+  env:
+    - name: POLL_INTERVAL
+      value: "300s"  # Check every 5 minutes
+```
 
 ### Registry Credentials
 
@@ -139,6 +163,14 @@ spec:
 | `controller.resources.limits.memory` | Memory limit for controller | `128Mi` |
 | `controller.resources.requests.cpu` | CPU request for controller | `10m` |
 | `controller.resources.requests.memory` | Memory request for controller | `64Mi` |
+| `gc.enabled` | Enable garbage collection deployment | `false` |
+| `gc.replicaCount` | Number of GC replicas | `1` |
+| `gc.resources.limits.cpu` | CPU limit for GC | `500m` |
+| `gc.resources.limits.memory` | Memory limit for GC | `128Mi` |
+| `gc.resources.requests.cpu` | CPU request for GC | `10m` |
+| `gc.resources.requests.memory` | Memory request for GC | `64Mi` |
+| `gc.extraArgs` | Additional arguments for GC command | `[]` |
+| `gc.env` | Environment variables for GC deployment | `[]` |
 | `namespace.create` | Create the namespace | `true` |
 | `namespace.name` | Namespace name | `kyverno-artifact-operator-system` |
 
@@ -167,6 +199,22 @@ controller:
     requests:
       cpu: 100m
       memory: 128Mi
+
+# Enable garbage collection deployment
+gc:
+  enabled: true
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 128Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi
+  # Optional: Customize polling interval
+  env:
+    - name: POLL_INTERVAL
+      value: "300s"  # Check every 5 minutes
 ```
 
 Install with custom values:
@@ -195,7 +243,7 @@ If you're upgrading from a version that used a separate watcher image (`ghcr.io/
    watcher:
      image:
        repository: my-registry/kyverno-artifact-operator
-       tag: "v0.2.0"
+       tag: "v0.2.7"
    ```
 
 ## Uninstalling the Chart

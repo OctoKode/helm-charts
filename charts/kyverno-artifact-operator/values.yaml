@@ -93,6 +93,52 @@ controller:
 
   affinity: {}
 
+# Garbage collection deployment configuration
+gc:
+  # Specifies whether the garbage collection deployment should be created
+  enabled: false
+  replicaCount: 1
+
+  podAnnotations: {}
+
+  podSecurityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+
+  securityContext:
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - "ALL"
+
+  resources:
+    limits:
+      cpu: 500m
+      memory: 128Mi
+    requests:
+      cpu: 10m
+      memory: 64Mi
+
+  # Additional arguments to pass to the gc command
+  extraArgs: []
+
+  # Environment variables for the gc deployment
+  env: []
+
+  # Liveness probe configuration
+  livenessProbe: {}
+
+  # Readiness probe configuration
+  readinessProbe: {}
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
 # Namespace configuration
 namespace:
   create: false

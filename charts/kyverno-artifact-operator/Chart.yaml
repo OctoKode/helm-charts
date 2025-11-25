@@ -2,9 +2,9 @@ apiVersion: v2
 name: kyverno-artifact-operator
 description: >-
   A Kubernetes operator that automatically syncs Kyverno policies from OCI artifacts.
-  Uses a unified binary for both operator and watcher modes.
+  Uses a unified binary for operator, watcher, and optional garbage collection modes.
 type: application
-version: 0.2.1
+version: 0.2.2
 appVersion: "latest"
 keywords:
   - kyverno
