@@ -147,7 +147,7 @@ spec:
 ### Chart Values
 
 | Parameter | Description | Default |
-|-----------|-------------|---------|
+| --------- | ----------- | ------- |
 | `replicaCount` | Number of controller replicas | `1` |
 | `image.repository` | Controller image repository | `ghcr.io/octokode/kyverno-artifact-operator` |
 | `image.pullPolicy` | Image pull policy | `IfNotPresent` |
