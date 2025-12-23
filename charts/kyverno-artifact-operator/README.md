@@ -149,6 +149,7 @@ spec:
 | Parameter | Description | Default |
 | --------- | ----------- | ------- |
 | `replicaCount` | Number of controller replicas | `1` |
+| `deletePoliciesOnTermination` | If `true`, the operator will delete associated policies when a `KyvernoArtifact` is deleted | `false` |
 | `image.repository` | Controller image repository | `ghcr.io/octokode/kyverno-artifact-operator` |
 | `image.pullPolicy` | Image pull policy | `IfNotPresent` |
 | `image.tag` | Image tag | `latest` |
@@ -165,6 +166,8 @@ spec:
 | `controller.resources.requests.memory` | Memory request for controller | `64Mi` |
 | `gc.enabled` | Enable garbage collection deployment | `false` |
 | `gc.replicaCount` | Number of GC replicas | `1` |
+| `gc.image.repository` | GC image repository (defaults to global image) | `""` |
+| `gc.image.tag` | GC image tag (defaults to global image tag) | `""` |
 | `gc.resources.limits.cpu` | CPU limit for GC | `500m` |
 | `gc.resources.limits.memory` | Memory limit for GC | `128Mi` |
 | `gc.resources.requests.cpu` | CPU request for GC | `10m` |

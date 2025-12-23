@@ -4,6 +4,8 @@
 
 replicaCount: 1
 
+deletePoliciesOnTermination: false
+
 image:
   repository: ghcr.io/octokode/kyverno-artifact-operator
   pullPolicy: IfNotPresent
@@ -98,6 +100,12 @@ gc:
   # Specifies whether the garbage collection deployment should be created
   enabled: false
   replicaCount: 1
+
+  # Overrides for the GC deployment's image
+  # Defaults to the top-level image if not set
+  image:
+    repository: ""
+    tag: ""
 
   podAnnotations: {}
 

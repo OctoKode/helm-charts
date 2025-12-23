@@ -49,6 +49,8 @@ spec:
           value: {{ .Values.watcher.secret.artifactoryUsernameKey }}
         - name: ARTIFACTORY_PASSWORD_KEY
           value: {{ .Values.watcher.secret.artifactoryPasswordKey }}
+        - name: WATCHER_DELETE_POLICIES_ON_TERMINATION
+          value: {{ .Values.deletePoliciesOnTermination | quote }}
         ports: []
         livenessProbe:
           {{- toYaml .Values.controller.livenessProbe | nindent 10 }}

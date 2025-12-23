@@ -34,7 +34,7 @@ spec:
       - name: gc
         securityContext:
           {{- toYaml .Values.gc.securityContext | nindent 10 }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        image: "{{- with .Values.gc.image.repository -}}{{- . -}}{{- else -}}{{- .Values.image.repository -}}{{- end -}}:{{- with .Values.gc.image.tag -}}{{- . -}}{{- else -}}{{- .Values.image.tag | default .Chart.AppVersion -}}{{- end -}}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command:
         - /manager
