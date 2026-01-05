@@ -149,7 +149,6 @@ spec:
 | Parameter | Description | Default |
 | --------- | ----------- | ------- |
 | `replicaCount` | Number of controller replicas | `1` |
-| `deletePoliciesOnTermination` | If `true`, the operator will delete associated policies when a `KyvernoArtifact` is deleted | `false` |
 | `image.repository` | Controller image repository | `ghcr.io/octokode/kyverno-artifact-operator` |
 | `image.pullPolicy` | Image pull policy | `IfNotPresent` |
 | `image.tag` | Image tag | `latest` |

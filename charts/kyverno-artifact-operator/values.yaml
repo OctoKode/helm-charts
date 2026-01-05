@@ -4,8 +4,6 @@
 
 replicaCount: 1
 
-deletePoliciesOnTermination: false
-
 image:
   repository: ghcr.io/octokode/kyverno-artifact-operator
   pullPolicy: IfNotPresent
