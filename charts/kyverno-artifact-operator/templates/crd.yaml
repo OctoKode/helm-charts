@@ -60,7 +60,7 @@ spec:
                   deleted.
                 type: boolean
               reconcilePoliciesFromChecksum:
-                description: If set to "true", enables reconciliation of policies based on content checksums 
+                description: If set to "true", enables reconciliation of policies based on content checksums
                 type: boolean
             type: object
           status:
