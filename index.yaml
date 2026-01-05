@@ -3,6 +3,35 @@ entries:
   kyverno-artifact-operator:
   - apiVersion: v2
     appVersion: latest
+    created: "2026-01-05T13:50:08.033124055Z"
+    dependencies:
+    - condition: kyverno.enabled
+      name: kyverno
+      repository: https://kyverno.github.io/kyverno/
+      version: 3.5.2
+    description: A Kubernetes operator that automatically syncs Kyverno policies from
+      OCI artifacts. Uses a unified binary for operator, watcher, and optional garbage
+      collection modes.
+    digest: 32f3f88cd75ac49c536a83cd7d1e6bcc7a38fd2da57fbc9661cc110e033b2fa9
+    home: https://github.com/OctoKode/kyverno-artifact-operator
+    keywords:
+    - kyverno
+    - policies
+    - operator
+    - oci
+    - artifacts
+    kubeVersion: '>=1.25.0-0'
+    maintainers:
+    - name: Marcus Young
+    name: kyverno-artifact-operator
+    sources:
+    - https://github.com/OctoKode/kyverno-artifact-operator
+    type: application
+    urls:
+    - https://github.com/OctoKode/helm-charts/releases/download/kyverno-artifact-operator-0.2.6/kyverno-artifact-operator-0.2.6.tgz
+    version: 0.2.6
+  - apiVersion: v2
+    appVersion: latest
     created: "2025-12-23T19:23:41.949911763Z"
     dependencies:
     - condition: kyverno.enabled
@@ -219,4 +248,4 @@ entries:
     urls:
     - https://github.com/OctoKode/helm-charts/releases/download/kyverno-artifact-operator-0.1.0/kyverno-artifact-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-12-23T19:23:41.94994765Z"
+generated: "2026-01-05T13:50:08.03314785Z"
